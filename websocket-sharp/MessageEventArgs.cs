@@ -59,14 +59,12 @@ namespace WebSocketSharp
 
       _opcode = opcode;
       _rawData = data;
-      _data = convertToString (opcode, data);
     }
 
     internal MessageEventArgs (Opcode opcode, PayloadData payload)
     {
       _opcode = opcode;
       _rawData = payload.ApplicationData;
-      _data = convertToString (opcode, _rawData);
     }
 
     #endregion
@@ -81,6 +79,10 @@ namespace WebSocketSharp
     /// </value>
     public string Data {
       get {
+        if (_data == null)
+        {
+          _data = convertToString (_opcode, _rawData);
+        }
         return _data;
       }
     }
